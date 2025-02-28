@@ -13,27 +13,34 @@ console.info({ answer });
 
 function Game() {
   // Static length array filled with empty strings
-  const [guesses,setGuesses] = React.useState(new Array(NUM_OF_GUESSES_ALLOWED).fill(''));
+  const [guesses, setGuesses] = React.useState(
+    new Array(NUM_OF_GUESSES_ALLOWED).fill("")
+  );
+
+  // Locate the answer among the guesses
+  const answerIndex = guesses.findAnswer((str) => str === answer);
+  // Check game won
+  const gameWon = answerIndex !== -1;
+
+  // Locate the next empty slot
+  const insertIndex = guesses.findIndex((str) => str === "");
+  // Check game lost
+  const gameLost = insertIndex === -1;
 
   const handleAddGuess = (guessValue) => {
     const newGuesses = [...guesses];
-    // Locate the next empty slot to insert guess
-    const insertIndex = newGuesses.findIndex((str)=>str==='');
-    if (insertIndex===-1) {
-      // Endgame state TODO
-      console.log("Ran out of guesses")
-      return;
-    } else {
-      // Continue game loop
-      newGuesses[insertIndex]=guessValue;
-      setGuesses(newGuesses)
-    }
-  }
+    newGuesses[insertIndex] = guessValue;
+    setGuesses(newGuesses);
+  };
 
   return (
     <>
       <Board answer={answer} guesses={guesses}></Board>
-      <GuessInput handleAddGuess={handleAddGuess}></GuessInput>
+      <GuessInput
+        inert={gameWon || gameLost}
+        handleAddGuess={handleAddGuess}
+      ></GuessInput>
+      
     </>
   );
 }
