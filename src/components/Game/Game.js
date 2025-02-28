@@ -39,7 +39,7 @@ function Game() {
     <>
       <Board answer={answer} guesses={guesses}></Board>
       <GuessInput
-        inert={gameWon || gameLost}
+        disabled={gameWon || gameLost}
         handleAddGuess={handleAddGuess}
       ></GuessInput>
       {gameWon && <HappyBanner howMany={answerIndex+1}></HappyBanner>}

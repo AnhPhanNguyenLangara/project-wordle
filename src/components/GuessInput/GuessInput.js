@@ -1,11 +1,10 @@
 import React from "react";
 
-function GuessInput({ handleAddGuess, inert }) {
+function GuessInput({ handleAddGuess, disabled }) {
   const [guess, setGuess] = React.useState("");
 
   return (
     <form
-      inert={inert}
       className="guess-input-wrapper"
       onSubmit={(e) => {
         e.preventDefault();
@@ -16,6 +15,7 @@ function GuessInput({ handleAddGuess, inert }) {
     >
       <label htmlFor="guess-input">Enter guess:</label>
       <input
+        disabled={disabled}
         id="guess-input"
         type="text"
         required
