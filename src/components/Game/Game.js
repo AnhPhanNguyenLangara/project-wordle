@@ -25,7 +25,7 @@ function Game() {
   // Locate the next empty slot
   const insertIndex = guesses.findIndex((str) => str === "");
   // Check game lost
-  const gameLost = insertIndex === -1;
+  const gameLost = !gameWon && insertIndex === -1;
 
   const handleAddGuess = (guessValue) => {
     const newGuesses = [...guesses];
