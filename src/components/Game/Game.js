@@ -12,15 +12,19 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  // Static length array filled with empty strings
   const [guesses,setGuesses] = React.useState(new Array(NUM_OF_GUESSES_ALLOWED).fill(''));
 
   const handleAddGuess = (guessValue) => {
     const newGuesses = [...guesses];
-    const insertIndex = newGuesses.findIndex((e)=>e==='');
+    // Locate the next empty slot to insert guess
+    const insertIndex = newGuesses.findIndex((str)=>str==='');
     if (insertIndex===-1) {
+      // Endgame state TODO
       console.log("Ran out of guesses")
       return;
     } else {
+      // Continue game loop
       newGuesses[insertIndex]=guessValue;
       setGuesses(newGuesses)
     }
