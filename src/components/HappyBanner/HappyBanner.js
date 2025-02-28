@@ -5,7 +5,7 @@ function HappyBanner({howMany}) {
     <div className="happy banner">
       <p>
         <strong>Congratulations!</strong> Got it in{' '}
-        <strong>{howMany} guess{howMany>1 && 'es'}</strong>.
+        <strong>{howMany} {howMany===1 ? "guess": "guesses"}</strong>.
       </p>
     </div>
   );
