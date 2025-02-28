@@ -20,7 +20,7 @@ function Game() {
   );
 
   // Locate the answer among the guesses
-  const answerIndex = guesses.findAnswer((str) => str === answer);
+  const answerIndex = guesses.findIndex((str) => str === answer);
   // Check game won
   const gameWon = answerIndex !== -1;
 
