@@ -8,12 +8,12 @@ import Board from "../Board/Board";
 import HappyBanner from "../HappyBanner/HappyBanner";
 import SadBanner from "../SadBanner/SadBanner";
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [answer, setAnswer] = React.useState(() => {
+    const newAns = sample(WORDS);
+    console.info({ answer: newAns });
+    return newAns;
+  });
   // Static length array filled with empty strings
   const [guesses, setGuesses] = React.useState(
     new Array(NUM_OF_GUESSES_ALLOWED).fill("")
@@ -29,6 +29,13 @@ function Game() {
   // Check game lost
   const gameLost = !gameWon && insertIndex === -1;
 
+  const handleReset = () => {
+    const newAns = sample(WORDS);
+    console.info({ newAns });
+    setAnswer(newAns);
+    setGuesses(new Array(NUM_OF_GUESSES_ALLOWED).fill(""));
+  };
+
   const handleAddGuess = (guessValue) => {
     const newGuesses = [...guesses];
     newGuesses[insertIndex] = guessValue;
@@ -42,8 +49,15 @@ function Game() {
         disabled={gameWon || gameLost}
         handleAddGuess={handleAddGuess}
       ></GuessInput>
-      {gameWon && <HappyBanner howMany={answerIndex+1}></HappyBanner>}
-      {gameLost && <SadBanner answer={answer}></SadBanner>}
+      {gameWon && (
+        <HappyBanner
+          handleReset={handleReset}
+          howMany={answerIndex + 1}
+        ></HappyBanner>
+      )}
+      {gameLost && (
+        <SadBanner handleReset={handleReset} answer={answer}></SadBanner>
+      )}
     </>
   );
 }
